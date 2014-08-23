@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+</head>
+
+
+<body>
+
+<h1>JavaScript Reference</h1>
+
+<p>Button Clicked</p>
+
+<button type="button" onClick="myFunction()"> Date</button>
+<p id="demo"> </p>
+<button type="button" onClick="funcClickMe()"> ClickMe!</button>
+<p id="click"> </p>
+
+<script> 
+function myFunction(){
+	document.getElementById("demo").innerHTML = Date();
+}
+
+function funcClickMe(){
+	document.getElementById("click").innerHTML = "Hello, JavaScript. Displayed when you clicked me!";
+}
+
+function changeColor(){
+	var x = document.getElementById("title");
+	x.style.fontSize = "25px";
+	x.style.color = "blue";
+}	
+</script>
+
+<h3 id="title">HTML DOM</h3>
+<li> HTML DOM Document Object Model </li>
+<li> Used to change html elements </li>
+<li> Accessing HTML elements.document.getElementById()  </li>
+
+<button type="button" onClick="changeColor()"> ChangeColor</button>
+
+<p>Please enter number from 1-10</p>
+
+<input id="number" type="text">
+
+<button type="button" onClick="validateInput()" > Submit</button>
+
+<script>
+function validateInput() {
+	var x, text;
+	id = "numb";
+	x = document.getElementById("number").value;
+	if(isNaN(x)||x<1||x>10){
+		text = "Input not valid.";
+	} else {
+		text = "Input OK";
+	}
+	document.getElementById("validate").innerHTML = text;
+
+}</script>
+<p id="validate"></p> 
+
+<h3>External Script</h3>
+
+<button type="button" onClick="externalText()">External Script</button>
+
+<p id="externalText"> Text</p>
+
+<script src="main.js"></script>
+
+</body>
+
+</html> 
