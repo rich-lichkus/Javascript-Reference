@@ -1,5 +1,5 @@
-LocoMojoApp
-===========
+Javascript Reference
+====================
 
 |Developer  |Richard Lichkus   |
 |:----------|:-----------------|
