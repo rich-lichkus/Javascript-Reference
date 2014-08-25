@@ -94,6 +94,60 @@ var lastName = "Johnson";                         // String assigned by a string
 var cars = ["Saab", "Volvo", "BMW"];              // Array  assigned by an array literal </br>
 var person = {firstName:"John", lastName:"Doe"};  // Object assigned by an object literal </br>
 </code>
+
+<p id="objects"></p>
+
+<script>
+var person = {
+    firstName: "John",
+    lastName : "Doe",
+    id       : 5566,
+    age      : 24,
+    fullName : function (){
+    	return this.firstName + " " + this.lastName
+    },
+    ageInDogYears : function(){
+    	return 24*7;
+    }
+};
+document.getElementById("objects").innerHTML = person.fullName();
+var x = document.getElementById("objects").innerHTML;
+document.getElementById("objects").innerHTML = x + " is " + person.ageInDogYears() + " in dogs years";
+</script>
+
+<h3> Global and Local </h3>
+<p> no var, auto global</p>
+
+
+<h3> Events </h3>
+<table style="width:500px">
+	<tr>
+		<th>Event</th>
+		<th>Description</th>	 
+	</tr>
+	<tr>	
+		<td>onchange</td>	
+		<td>An HTML element has been changed</td>
+	<tr>	
+		<td>onclick</td>	
+		<td>The user clicks an HTML element</td>
+	<tr>	
+		<td>onmouseover</td>	
+		<td>The user moves the mouse over an HTML element</td>
+	<tr>	
+		<td>onmouseout</td>	
+		<td>The user moves the mouse away from an HTML element</td>
+	<tr>	
+		<td>onkeydown</td>	
+		<td>The user pushes a keyboard key</td>
+	</tr>
+	<tr>	
+		<td>onload</td>	
+		<td>The browser has finished loading the page</td>
+	</tr>
+
+</table>
+
 </body>
 
 </html> 
