@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+<div align="center">
+<h2> Word Rank </h2>
+
+<p> Select the more positive word.</p>
+
+<button 
+	style="width:200px; height:50px;"
+	type="button" 
+	id="btnLeft" 
+	onClick="leftWon()" 
+	>Welcome,
+</button>
+
+<button 
+	style="width:200px; height:50px;"
+	type="button" 
+	id="btnRight"
+	onClick="rightWon()"
+	>Word Rank
+</button>
+
+<br><br>
+
+<button 
+	style="width:50px;"
+	type="button" 
+	id="btnLeft" 
+	onClick="initialize()" 
+	>Start
+</button>
+
+<div id="results"></div>
+
+<button 
+	style="width:50px;"
+	type="button" 
+	id="btnOrder" 
+	onClick="orderList()" 
+	>Order
+</button>
+
+<button 
+	type="button" 
+	id="btnNormal" 
+	onClick="norm()" 
+	>Normalize
+</button>
+
+<p id="parNorm"></p>
+</div>
+ <script>
+ 	var words = ["good",
+ 				 "bad",
+ 				 "awesome",
+ 				 "poor",
+ 				 "terrible",
+ 				 "fantastic",
+ 				 "amazing",
+ 				 "disgusting"];
+
+ 	var wordRecords = [];
+
+	for (var index in words){
+
+		aRecord = new Object();
+		aRecord.word = words[index];
+		aRecord.win = 0;
+		aRecord.lose = 0;
+		aRecord.draw = 0;
+		aRecord.matches = 0;
+		aRecord.winPercentage =0;
+		aRecord.eloScore = 1200;
+		aRecord.totOppRate = 0;
+		console.log(words[index] + " " + aRecord.word + " W:" + aRecord.win  
+								 + " L:" + aRecord.lose + " T:" + aRecord.matches);
+		wordRecords.push(aRecord);
+	}
+
+ 	var btnLeftWord = document.getElementById("btnLeft");
+	var btnRightWord = document.getElementById("btnRight");
+	var parResults = document.getElementById("results");
+	
+	var leftRandIndex;
+	var	rightRandIndex;
+
+	var leftRecord;
+	var rightRecord;
+
+	var normalizedMax =0;
+
+	function getRandomInt(min, max) {
+    	return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
+ 	function initialize(){
+ 		leftRandIndex = getRandomInt(0, words.length-1);
+		rightRandIndex = getRandomInt(0, words.length-1);
+
+		while(leftRandIndex == rightRandIndex)
+		{
+			rightRandIndex = getRandomInt(0, words.length-1);
+		}
+
+		leftRecord = wordRecords[leftRandIndex];
+		rightRecord = wordRecords[rightRandIndex];
+
+ 		btnLeftWord.innerHTML  = words[leftRandIndex];
+ 		btnRightWord.innerHTML = words[rightRandIndex];
+ 		console.log("config called");
+ 	}
+
+	function leftWon(){
+		leftRecord.win++;
+		rightRecord.lose++;
+		this.process();
+	}	
+
+	function rightWon(){
+		rightRecord.win++;
+		leftRecord.lose++;
+		this.process();
+	}
+
+	function eloPerformanceRating(wordRecord) {
+		wordRecord.eloPerformanceRating = ((wordRecord.totOppRate + 400*(wordRecord.win-wordRecord.lose))/wordRecord.matches);
+	}
+
+	function process(){
+		leftRecord.matches++;
+		leftRecord.winPercentage = leftRecord.win/leftRecord.matches;
+		eloPerformanceRating(leftRecord);
+		rightRecord.matches++;
+		rightRecord.winPercentage = rightRecord.win/rightRecord.matches;
+		eloPerformanceRating(rightRecord);
+		// this.orderList();
+		this.printRecords();
+		this.initialize();
+	}
+ 
+	function printRecords(){
+		var tableString = "";
+		tableString = "<table style=\"width:400px\"><tr><th>Word</th><th>Win</th><th>Lose</th><th>Total</th><th>Win Percentage</th></tr>";
+
+		for (var index in wordRecords){
+			tableString += "<tr><td>" + wordRecords[index].word + "</td><td>" + 
+							   wordRecords[index].win  + "</td><td>" + 
+							   wordRecords[index].lose + "</td><td>" + 
+							   wordRecords[index].matches + "</td><td>" +
+							   wordRecords[index].winPercentage.toPrecision(3) + "</td><td>" +
+							   wordRecords[index].eloPerformanceRating + "</td></tr>";
+		}
+
+		tableString += "</table>";
+		parResults.innerHTML = tableString;
+	}
+
+	function orderList() {
+		for (i =0; i<wordRecords.length-1; i++){
+			for(j =i+1; j<wordRecords.length; j++){
+				if(wordRecords[j].winPercentage > wordRecords[i].winPercentage){
+					var recordHold = wordRecords[i];
+					wordRecords[i] = wordRecords[j];
+					wordRecords[j] = recordHold;
+				}
+			}
+		}
+		this.printRecords()
+	}
+
+	function findMaxMatches () {
+		normalizedMax =0;
+		for(i=0; i<wordRecords.length; i++){
+			if(normalizedMax<wordRecords[i].matches){
+				normalizedMax = wordRecords[i].matches;
+			}
+		}
+		// document.getElementById("parNorm").innerHTML = normalizedMax;
+	}
+
+	function norm(){
+		// nothing
+	}
+
+</script>
+
+</body>
+
+</html>
